@@ -39,8 +39,9 @@ sources:
 
   - name: "LangChain Blog"
     type: rss
-    url: "https://blog.langchain.dev/rss/"
+    url: "https://www.langchain.com/blog/rss.xml"
     enabled: true
+    max_items: 10
 
   - name: "arXiv"
     type: pdf
@@ -55,15 +56,38 @@ sources:
     enabled: true
     max_items: 20
   
-  - name: "The Batch (DeepLearning.AI)"
-    type: rss
-    url: "https://www.deeplearning.ai/the-batch/feed/"
-    enabled: true
-
   - name: "Towards Data Science"
     type: rss
     url: "https://towardsdatascience.com/feed"
     enabled: true
+
+  - name: "Simon Willison"
+    type: rss
+    url: "https://simonwillison.net/atom/everything/"
+    enabled: true
+
+  - name: "Lilian Weng"
+    type: rss
+    url: "https://lilianweng.github.io/index.xml"
+    enabled: true
+    max_items: 10
+
+  - name: "Google DeepMind"
+    type: rss
+    url: "https://deepmind.google/blog/rss.xml"
+    enabled: true
+    max_items: 10
+
+  - name: "Chip Huyen"
+    type: rss
+    url: "https://huyenchip.com/feed.xml"
+    enabled: true
+
+  - name: "The New Stack"
+    type: rss
+    url: "https://thenewstack.io/feed/"
+    enabled: true
+    max_items: 10
 
   # --- Add new sources below ---
   # - name: "My Source"
