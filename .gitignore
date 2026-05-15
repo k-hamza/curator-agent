@@ -1,0 +1,70 @@
+# =============================================================================
+# Python
+# =============================================================================
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+
+# =============================================================================
+# Virtual environment (pyenv + venv)
+# =============================================================================
+.venv/
+venv/
+env/
+
+# .python-version contains the local virtualenv name (pyenv-virtualenv)
+# — meaningless for other contributors, so we ignore it
+# Python version requirement is captured in pyproject.toml (requires-python)
+.python-version
+
+# =============================================================================
+# Package build artifacts
+# =============================================================================
+*.egg-info/
+dist/
+build/
+*.egg
+
+# =============================================================================
+# Project-specific — generated files that must stay local
+# =============================================================================
+
+# Daily digests — personal output, never pushed to git
+digests/*.md
+
+# SQLite memory database — personal data, never pushed to git
+data/*.db
+
+# Downloaded PDFs — can be large, never pushed to git
+data/pdfs/
+
+# =============================================================================
+# Testing & coverage
+# =============================================================================
+.pytest_cache/
+.coverage
+htmlcov/
+coverage.xml
+
+# =============================================================================
+# IDE & editors
+# =============================================================================
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+
+# =============================================================================
+# Logs
+# =============================================================================
+*.log
+logs/
+
+# =============================================================================
+# Environment variables (if you add a .env file later for secrets)
+# =============================================================================
+.env
+.env.*

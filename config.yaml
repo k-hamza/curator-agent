@@ -1,0 +1,74 @@
+# =============================================================================
+# Tech Watch Agent — Configuration
+# =============================================================================
+# Edit this file to customise the agent behaviour.
+# Adding a new source: add an entry to the sources list with the correct type.
+# Valid types: rss | api | pdf | web
+
+agent:
+  model: "qwen3:8b"                           # Ollama model to use
+  llm_base_url: "http://localhost:11434/v1"  # Ollama local — replace with any OpenAI-compatible URL
+  max_articles_per_run: 50                     # max articles processed per run
+  relevance_threshold: 0.6                     # min LLM score to include an article (0.0–1.0)
+  pdf_timeout: 30                              # seconds — increase on slow connections
+  pdf_max_chars: 8000                          # characters extracted per PDF (reduce for small context models)
+  pdf_max_concurrent: 3                        # PDFs downloaded in parallel
+  pdf_storage_dir: "data/pdfs"                 # base dir for downloaded PDFs — subdirs created per source
+
+interests:
+  - "AI agents"
+  - "LLM"
+  - "DevOps"
+  - "MLOps"
+  - "infrastructure"
+
+scheduling:
+  enabled: false          # set to true to enable daily automatic runs
+  cron: "0 7 * * *"       # daily at 07:00 — min hour day month weekday
+
+# -----------------------------------------------------------------------------
+# Sources
+# Each entry requires: name, type, url, enabled
+# Optional fields: max_items, categories
+# -----------------------------------------------------------------------------
+sources:
+  - name: "Hugging Face Blog"
+    type: rss
+    url: "https://huggingface.co/blog/feed.xml"
+    enabled: true
+
+  - name: "LangChain Blog"
+    type: rss
+    url: "https://blog.langchain.dev/rss/"
+    enabled: true
+
+  - name: "arXiv"
+    type: pdf
+    url: "https://arxiv.org"
+    enabled: true
+    categories: ["cs.AI", "cs.LG", "cs.MA", "cs.CL"]  # cs.CL = NLP/LLM
+    max_items: 10
+
+  - name: "HackerNews"
+    type: api
+    url: "https://hacker-news.firebaseio.com"
+    enabled: true
+    max_items: 20
+  
+  - name: "The Batch (DeepLearning.AI)"
+    type: rss
+    url: "https://www.deeplearning.ai/the-batch/feed/"
+    enabled: true
+
+  - name: "Towards Data Science"
+    type: rss
+    url: "https://towardsdatascience.com/feed"
+    enabled: true
+
+  # --- Add new sources below ---
+  # - name: "My Source"
+  #   type: rss          # rss | api | pdf | web
+  #   url: "https://..."
+  #   enabled: false
+  #   max_items: 20
+  #   categories: []     # optional

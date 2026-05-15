@@ -1,0 +1,61 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "tech-watch-agent"
+version = "0.1.0"
+description = "Autonomous tech watch agent with LLM-powered filtering and summarization"
+requires-python = ">=3.11"
+
+dependencies = [
+    # HTTP client — async, used by all collectors and LLM client
+    "httpx>=0.27",
+
+    # RSS feed parsing
+    "feedparser>=6.0",
+
+    # PDF text extraction (arXiv papers)
+    "pdfplumber>=0.11",
+
+    # Data validation — contracts between agents
+    "pydantic>=2.7",
+
+    # LangGraph — deterministic orchestration pipeline
+    "langgraph>=0.2",
+
+    # SQLite ORM — persistent memory / deduplication
+    "sqlmodel>=0.0.19",
+
+    # YAML configuration loading
+    "pyyaml>=6.0",
+
+    # Structured logging
+    "loguru>=0.7",
+
+    # Job scheduling (daily digest trigger)
+    "apscheduler>=3.10",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0",
+    "pytest-asyncio>=0.23",
+    # Enables importing src/ layout without pip install -e .
+    "pytest-pythonpath>=0.7",
+]
+
+# --- Tool configuration ---
+
+[tool.setuptools.packages.find]
+# Critical for src/ layout: tell setuptools where to find packages
+where = ["src"]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"          # all async test functions run automatically
+testpaths = ["tests"]
+pythonpath = ["src"]           # makes `from tech_watch import ...` work in tests
+
+[tool.ruff]
+# Optional linter — add `ruff>=0.4` to dev deps if you want it
+line-length = 100
