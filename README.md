@@ -12,6 +12,47 @@ filters them using a local LLM, and produces a daily digest in Markdown format.
 - **Extensible** — add a new source by creating one file + one YAML entry
 - **Fully local** — no cloud API required, runs entirely with Ollama
 
+## Processing flow
+
+```
+┌─────────────────────────────────────────────────────┐
+│                   Orchestrator                      │
+│              (LangGraph StateGraph)                 │
+│        collect, filter, Summary and digest          │
+└──────────┬──────────────────────────────────────────┘
+           │
+    ┌──────▼──────────┐
+    │    Collectors   │  (one per source, independants and in parallel)
+    ├─────────────────┤
+    │  RSSCollector   │  feedparser + httpx async
+    │  ArxivCollector │  httpx + pdfplumber
+    │  HNCollector    │  official API HackerNews
+    └──────┬──────────┘
+           │ raw articles (Pydantic models)
+    ┌──────▼────────────┐
+    │  Deduplication    │  SQLite — filter on seen articles
+    │  Capping          │  Keep only max_articles_per_run
+    └──────┬────────────┘
+           │ new articles
+    ┌──────▼────────────┐
+    │   FilterAgent     │  LLM scoring (0.0 → 1.0)
+    │                   │  Keep articles with score >= threshold
+    └──────┬────────────┘
+           │
+    ┌──────▼────────────┐
+    │   SummaryAgent    │  LLM : summarize each article (in its original language)
+    └──────┬────────────┘
+           │
+    ┌──────▼────────────┐
+    │   DigestWriter    │  LLM : Overall overview
+    │                   │  Grouped by source, sorted by score
+    └──────┬────────────┘
+           │
+    ┌──────▼────────────┐
+    │   MarkdownWriter  │  Generate markdown file YYYY-MM-DD_HH-MM.md
+    └───────────────────┘
+```
+
 ## Requirements
 
 - Python 3.11+
