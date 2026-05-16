@@ -76,20 +76,21 @@ def _make_collect_node(settings: Settings, store: MemoryStore):
         total_collected = len(all_articles)
         logger.info(f"Collected {total_collected} articles across all sources")
 
-        # Respect max_articles_per_run
-        if total_collected > settings.agent.max_articles_per_run:
-            logger.info(
-                f"Capping at {settings.agent.max_articles_per_run} articles "
-                f"(collected {total_collected})"
-            )
-            all_articles = all_articles[: settings.agent.max_articles_per_run]
-
         # Deduplicate against memory store
         unseen = store.filter_unseen(all_articles)
+        total_unseen = len(unseen)
         logger.info(
-            f"After deduplication: {len(unseen)} new articles "
-            f"({total_collected - len(unseen)} already seen)"
+            f"After deduplication: {total_unseen} new articles "
+            f"({total_collected - total_unseen} already seen)"
         )
+
+        # Respect max_articles_per_run
+        if total_unseen > settings.agent.max_articles_per_run:
+            logger.info(
+                f"Capping at {settings.agent.max_articles_per_run} articles "
+                f"(collected {total_collected}) - (unseen {total_unseen})"
+            )
+            unseen = unseen[: settings.agent.max_articles_per_run]
 
         return {
             "raw_articles": unseen,
