@@ -21,6 +21,11 @@ interests:
   - "DevOps"
   - "MLOps"
   - "infrastructure"
+  - "agentic engineering"
+  - "ai engineering"
+  - "generative ai"
+  - "Platform Engineering"
+  - "SRE"
 
 scheduling:
   enabled: false          # set to true to enable daily automatic runs
@@ -47,7 +52,8 @@ sources:
     type: pdf
     url: "https://arxiv.org"
     enabled: true
-    categories: ["cs.AI", "cs.LG", "cs.MA", "cs.CL"]  # cs.CL = NLP/LLM
+    # https://arxiv.org/category_taxonomy
+    categories: ["cs.AI", "cs.LG", "cs.MA", "cs.CL", "cs.CV", "cs.SE"]
     max_items: 10
 
   - name: "HackerNews"
