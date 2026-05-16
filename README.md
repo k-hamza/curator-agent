@@ -63,12 +63,12 @@ filters them using a local LLM, and produces a daily digest in Markdown format.
 
 ```bash
 # Clone the repository
-git clone <this_repo>
-cd tech-watch-agent
+git clone <this-repo>
+cd curator-agent
 
 # Create and activate virtual environment
-pyenv virtualenv 3.11.9 tech-watch-agent-3.11.9
-pyenv local tech-watch-agent-3.11.9
+pyenv virtualenv 3.11.9 curator-agent-3.11.9
+pyenv local curator-agent-3.11.9
 
 # Install dependencies
 pip install -e ".[dev]"
@@ -133,7 +133,7 @@ Digests are written to `digests/YYYY-MM-DD_HH-MM.md`.
 ## Project Structure
 
 ```
-tech-watch-agent/
+curator-agent/
 ├── config.yaml                 # user configuration
 ├── pyproject.toml              # dependencies
 ├── scripts/
